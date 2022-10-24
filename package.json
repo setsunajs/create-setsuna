@@ -2,19 +2,35 @@
   "name": "create-setsuna",
   "version": "0.0.1",
   "description": "Used to quickly create a 'setsuna. js' project",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "keywords": [],
+  "homepage": "https://github.com/usagisah/create-setsuna#readme",
+  "bugs": {
+    "url": "https://github.com/usagisah/create-setsuna/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/usagisah/create-setsuna.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/usagisah/create-setsuna/issues"
+  "license": "MIT",
+  "author": "@顾弦笙/usagisah <1286791152@qq.com>",
+  "type": "module",
+  "bin": {
+    "se": "./bin/start.js",
+    "create-setsuna": "./bin/create.js"
   },
-  "homepage": "https://github.com/usagisah/create-setsuna#readme"
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.2",
+    "@types/node": "^18.11.4",
+    "chalk": "^5.1.2",
+    "inquirer": "^9.1.4",
+    "minimist": "^1.2.7",
+    "prettier": "^2.7.1",
+    "prettier-config-usagisah": "^1.0.1"
+  },
+  "engines": {
+    "node": "^14.18.0 || >=16.0.0"
+  }
 }
