@@ -1,15 +1,18 @@
 #!/usr/bin/env node
 
-import { resolve } from "node:path"
+import { relative, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import { banner } from "../lib/banner.js"
 import chalk from "chalk"
 import inquirer from "inquirer"
 import { existsSync } from "node:fs"
 import { mkdir, rm } from "node:fs/promises"
+import { makeBasePackage } from "../lib/makeBasePackage"
+import { makeBaseFile } from "../lib/makeBaseTemplate"
+import { resolvePkgManagement } from "../lib/resolvePkgManagement"
+import { normalizeCommand } from "../lib/normalizeCommand"
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
-const tempRoot = resolve(__dirname, "../lib/template")
 const proRoot = process.cwd()
 const validateDir = /^[-_a-zA-Z0-9]+$/
 
@@ -79,7 +82,27 @@ export async function create() {
 
   await mkdir(projectDir)
 
-  
+  const { pkg, withPkgToTemplate } = makeBasePackage(project, projectDir)
+  const { template, writeTemplateFile } = makeBaseFile(projectDir)
+  const manage = resolvePkgManagement()
+
+  if (router) {
+    withRouterOptions(pkg, template)
+  }
+
+  if (css) {
+    withCssOptions(cssTemp, pkg, template)
+  }
+
+  console.log(`\n${chalk.yellow(`project generating ...`)}`)
+
+  withPkgToTemplate(template)
+  writeTemplateFile()
+
+  console.log(chalk.green(`cd ${relative(cwd, root)}`))
+  console.log(chalk.green(normalizeCommand(manage, "install")))
+  console.log(chalk.green(normalizeCommand(manage, "dev")))
+  console.log(  )
 }
 
 create().catch(e => {
