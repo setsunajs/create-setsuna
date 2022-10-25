@@ -15,14 +15,15 @@
   "author": "@顾弦笙/usagisah <1286791152@qq.com>",
   "type": "module",
   "bin": {
-    "se": "./bin/start.js",
-    "create-setsuna": "./bin/create.js"
+    "create-setsuna": "./bin/create.js",
+    "se": "./bin/start.js"
   },
   "scripts": {
     "format": "prettier --write ."
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.2",
+    "@types/minimist": "^1.2.2",
     "@types/node": "^18.11.4",
     "chalk": "^5.1.2",
     "inquirer": "^9.1.4",
