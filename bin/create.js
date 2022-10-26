@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 
+import chalk from "chalk"
+import inquirer from "inquirer"
 import { relative, resolve } from "node:path"
 import { fileURLToPath } from "node:url"
 import { banner } from "../lib/banner.js"
-import chalk from "chalk"
-import inquirer from "inquirer"
 import { existsSync } from "node:fs"
 import { mkdir, rm } from "node:fs/promises"
-import { makeBasePackage } from "../lib/makeBasePackage"
-import { makeBaseFile } from "../lib/makeBaseTemplate"
-import { resolvePkgManagement } from "../lib/resolvePkgManagement"
-import { normalizeCommand } from "../lib/normalizeCommand"
+import { makeBasePackage } from "../lib/makeBasePackage.js"
+import { makeBaseFile } from "../lib/makeBaseTemplate.js"
+import { resolvePkgManagement } from "../lib/resolvePkgManagement.js"
+import { normalizeCommand } from "../lib/normalizeCommand.js"
+import { withRouterOptions } from "../lib/withRouterOptions.js"
+import { withCssOptions } from "../lib/withCssOptions.js"
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
 const proRoot = process.cwd()
@@ -19,7 +21,7 @@ const validateDir = /^[-_a-zA-Z0-9]+$/
 export async function create() {
   console.clear()
   console.log(`\n${banner}\n`)
-  const { project, router, cssTemp, override } = await inquirer.prompt([
+  const { project, router, css, cssTemp, override } = await inquirer.prompt([
     {
       type: "input",
       name: "project",
@@ -74,7 +76,9 @@ export async function create() {
   const projectDir = resolve(proRoot, project)
   if (override !== undefined) {
     if (!override) {
-      throw "The file already exists in the directory. Do you want to overwrite it"
+      throw chalk.red(
+        "The file already exists in the directory. Do you want to overwrite it"
+      )
     }
 
     await rm(projectDir, { force: true, recursive: true })
@@ -82,9 +86,9 @@ export async function create() {
 
   await mkdir(projectDir)
 
-  const { pkg, withPkgToTemplate } = makeBasePackage(project, projectDir)
+  const { pkg, withPkgToTemplate } = makeBasePackage(project)
   const { template, writeTemplateFile } = makeBaseFile(projectDir)
-  const manage = resolvePkgManagement()
+  const manage = await resolvePkgManagement()
 
   if (router) {
     withRouterOptions(pkg, template)
@@ -99,10 +103,11 @@ export async function create() {
   withPkgToTemplate(template)
   writeTemplateFile()
 
-  console.log(chalk.green(`cd ${relative(cwd, root)}`))
-  console.log(chalk.green(normalizeCommand(manage, "install")))
-  console.log(chalk.green(normalizeCommand(manage, "dev")))
-  console.log(  )
+  console.log()
+  console.log("\n" + chalk.green(`cd ${relative(proRoot, projectDir)}`))
+  console.log("\n" + chalk.green(normalizeCommand(manage, "install")))
+  console.log("\n" + chalk.green(normalizeCommand(manage, "dev")))
+  console.log()
 }
 
 create().catch(e => {
