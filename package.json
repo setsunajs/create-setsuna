@@ -1,6 +1,6 @@
 {
   "name": "create-setsuna",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "Used to quickly create a 'setsuna. js' project",
   "keywords": [
     "setsuna",
@@ -19,22 +19,26 @@
   "author": "@顾弦笙/usagisah <1286791152@qq.com>",
   "type": "module",
   "bin": {
-    "create-setsuna": "./bin/create.js"
+    "create-setsuna": "./bin/create.cjs"
   },
   "files": [
     "bin",
     "lib"
   ],
   "scripts": {
-    "format": "prettier --write ."
+    "build": "node ./build.js",
+    "format": "prettier --write src/**/*"
+  },
+  "dependencies": {
+    "chalk": "^5.1.2",
+    "inquirer": "^9.1.4",
+    "minimist": "^1.2.7"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.2",
     "@types/minimist": "^1.2.2",
     "@types/node": "^18.11.4",
-    "chalk": "^5.1.2",
-    "inquirer": "^9.1.4",
-    "minimist": "^1.2.7",
+    "esbuild": "^0.15.12",
     "prettier": "^2.7.1",
     "prettier-config-usagisah": "^1.0.1"
   },

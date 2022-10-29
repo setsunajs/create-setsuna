@@ -2,7 +2,6 @@
 
 Used to quickly create a 'setsuna.js' project
 
-
 ## Usage
 
 ```bash

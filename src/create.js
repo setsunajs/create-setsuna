@@ -3,18 +3,16 @@
 import chalk from "chalk"
 import inquirer from "inquirer"
 import { relative, resolve } from "node:path"
-import { fileURLToPath } from "node:url"
-import { banner } from "../lib/banner.js"
+import { banner } from "./banner.js"
 import { existsSync } from "node:fs"
 import { mkdir, rm } from "node:fs/promises"
-import { makeBasePackage } from "../lib/makeBasePackage.js"
-import { makeBaseFile } from "../lib/makeBaseTemplate.js"
-import { resolvePkgManagement } from "../lib/resolvePkgManagement.js"
-import { normalizeCommand } from "../lib/normalizeCommand.js"
-import { withRouterOptions } from "../lib/withRouterOptions.js"
-import { withCssOptions } from "../lib/withCssOptions.js"
+import { makeBasePackage } from "./makeBasePackage.js"
+import { makeBaseFile } from "./makeBaseTemplate.js"
+import { resolvePkgManagement } from "./resolvePkgManagement.js"
+import { normalizeCommand } from "./normalizeCommand.js"
+import { withRouterOptions } from "./withRouterOptions.js"
+import { withCssOptions } from "./withCssOptions.js"
 
-const __dirname = fileURLToPath(new URL(".", import.meta.url))
 const proRoot = process.cwd()
 const validateDir = /^[-_a-zA-Z0-9]+$/
 
