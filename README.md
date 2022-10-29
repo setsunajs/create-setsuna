@@ -1,6 +1,6 @@
 # create-setsuna
 
-Used to quickly create a 'setsuna. js' project
+Used to quickly create a 'setsuna.js' project
 
 
 ## Usage
