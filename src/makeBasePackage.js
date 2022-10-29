@@ -12,7 +12,7 @@ export function makeBasePackage(project) {
     },
     devDependencies: {
       vite: "^3.1.0",
-      "@setsunajs/plugin-setsuna": "^0.1.2"
+      "@setsunajs/plugin-setsuna": "^0.1.4"
     }
   }
   const withPkgToTemplate = template => {
