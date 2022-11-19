@@ -1,4 +1,6 @@
-export const styleCss = [
+import { TempItem } from "src/makeBaseTemplate";
+
+export const styleCss: TempItem = [
   "style.css",
   {
     ext: "css",

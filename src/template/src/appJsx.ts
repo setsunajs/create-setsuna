@@ -1,8 +1,10 @@
-export const appJsx = [
+import { TempItem } from "src/makeBaseTemplate";
+
+export const appJsx: TempItem = [
   "App.jsx",
   {
     ext: "jsx",
-    path: "./src/App.jsx",
+    path: "./src/App",
     value: `export function App() {
   return () => (
     <div class="app">

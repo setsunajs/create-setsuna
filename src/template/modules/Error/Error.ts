@@ -1,8 +1,10 @@
-export const errorJsx = [
+import { TempItem } from "src/makeBaseTemplate"
+
+export const errorJsx: TempItem = [
   "errorJsx",
   {
     ext: "jsx",
-    path: "./modules/Error/Error.jsx",
+    path: "./modules/Error/Error",
     value: `import { useNavigate } from "@setsunajs/router"
 
 export function Error() {
@@ -17,7 +19,7 @@ export function Error() {
   }
 ]
 
-export const Error = [
+export const Error: TempItem = [
   "Error",
   {
     ext: "",

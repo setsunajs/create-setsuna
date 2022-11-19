@@ -2,7 +2,7 @@ import { build } from "esbuild"
 import { resolve } from "path"
 
 build({
-  entryPoints: [resolve(process.cwd(), "./src/create.js")],
+  entryPoints: [resolve(process.cwd(), "./src/create.ts")],
   outfile: "bin/create.cjs",
   incremental: true,
   bundle: true,

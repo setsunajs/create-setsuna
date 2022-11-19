@@ -1,8 +1,10 @@
-export const jsconfigJson = [
+import { TempItem } from "src/makeBaseTemplate";
+
+export const jsconfigJson: TempItem = [
   "jsconfig.json",
   {
     ext: "json",
-    path: "./jsconfig.json",
+    path: "./jsconfig",
     value: {
       compilerOptions: {
         jsx: "preserve",

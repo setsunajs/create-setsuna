@@ -2,9 +2,11 @@ import { postcssConfig } from "./template/postcssConfig.js"
 import { tailwindConfig } from "./template/tailwindConfig.js"
 import { scopeModuleCss } from "./template/src/scopeModuleCss.js"
 import { tailwindCss } from "./template/src/assets/tailwindCss.js"
+import { Temp } from "./makeBaseTemplate.js"
+import { PKG } from "./makeBasePackage.js"
 
-export function withCssOptions(type, pkg, template) {
-  const src = template.get("src").content
+export function withCssOptions(type: string, pkg: PKG, template: Temp) {
+  const src = template.get("src")!.content!
 
   if (type === "tailwind") {
     pkg.devDependencies["autoprefixer"] = "^10.4.12"
@@ -14,18 +16,18 @@ export function withCssOptions(type, pkg, template) {
     template.set(postcssConfig[0], postcssConfig[1])
     template.set(tailwindConfig[0], tailwindConfig[1])
 
-    const main = src.get("main.jsx")
-    main.value = main.value.replace(
+    const main = src.get("main.jsx")!
+    main.value = main.value!.replace(
       /(import ".\/style.css")/,
       `$1\nimport "./assets/tailwind.css"`
     )
 
-    const assets = src.get("assets").content
+    const assets = src.get("assets")!.content!
     assets.set(tailwindCss[0], tailwindCss[1])
     return
   }
 
-  const { ext, version } = resolveCssConfig(type)
+  const { ext, version } = resolveCssConfig(type)!
   if (type !== "css-module") {
     pkg.devDependencies[type] = version
   }
@@ -36,15 +38,15 @@ export function withCssOptions(type, pkg, template) {
     value: scopeModuleCss[1].value
   })
 
-  const app = src.get("App.jsx")
-  app.value = app.value.replace(
+  const app = src.get("App.jsx")!
+  app.value = app.value!.replace(
     /^/,
     `import style from "./scope.module.${ext}"\n`
   )
-  app.value = app.value.replace(/"title"/, `{"title " + style.color}`)
+  app.value = app.value!.replace(/"title"/, `{"title " + style.color}`)
 }
 
-export function resolveCssConfig(type) {
+export function resolveCssConfig(type: string) {
   return {
     "css-module": {
       ext: "css"

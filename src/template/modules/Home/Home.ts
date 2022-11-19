@@ -1,8 +1,10 @@
-export const homeJsx = [
+import { TempItem } from "src/makeBaseTemplate"
+
+export const homeJsx: TempItem = [
   "home.jsx",
   {
     ext: "jsx",
-    path: "./modules/Home/Home.jsx",
+    path: "./modules/Home/Home",
     value: `import { useNavigate } from "@setsunajs/router"
 
 export function Home() {
@@ -17,7 +19,7 @@ export function Home() {
   }
 ]
 
-export const Home = [
+export const Home: TempItem = [
   "Home",
   {
     ext: "",

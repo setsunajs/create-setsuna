@@ -6,8 +6,8 @@ import { relative, resolve } from "node:path"
 import { banner } from "./banner.js"
 import { existsSync } from "node:fs"
 import { mkdir, rm } from "node:fs/promises"
-import { makeBasePackage } from "./makeBasePackage.js"
-import { makeBaseFile } from "./makeBaseTemplate.js"
+import { makeBasePackage } from "./makeBasePackage"
+import { makeBaseFile } from "./makeBaseTemplate"
 import { resolvePkgManagement } from "./resolvePkgManagement.js"
 import { normalizeCommand } from "./normalizeCommand.js"
 import { withRouterOptions } from "./withRouterOptions.js"
@@ -19,7 +19,8 @@ const validateDir = /^[-_a-zA-Z0-9]+$/
 export async function create() {
   console.clear()
   console.log(`\n${banner}\n`)
-  const { project, router, css, cssTemp, override } = await inquirer.prompt([
+
+  const { project, override } = await inquirer.prompt([
     {
       type: "input",
       name: "project",
@@ -31,6 +32,28 @@ export async function create() {
           : "The project name must be defined by (number, character, - _) Character composition within"
       }
     },
+    {
+      type: "confirm",
+      name: "override",
+      message: chalk.yellow(
+        "The file already exists in the directory. Do you want to overwrite it"
+      ),
+      default: false,
+      when: ({ project }) => existsSync(resolve(proRoot, project))
+    }
+  ])
+  const projectDir = resolve(proRoot, project)
+  if (override !== undefined) {
+    if (!override) {
+      throw chalk.red(
+        "The file already exists in the directory. Do you want to overwrite it"
+      )
+    }
+
+    await rm(projectDir, { force: true, recursive: true })
+  }
+
+  const { router, css, cssTemp, lang } = await inquirer.prompt([
     {
       type: "confirm",
       name: "router",
@@ -47,41 +70,37 @@ export async function create() {
       type: "list",
       name: "cssTemp",
       message: chalk.yellow("choose css template"),
-      choices: ["tailwind", "css-module", "sass", "stylus", "less"],
+      choices: ["css-module", "tailwind", "sass", "stylus", "less"],
       default: "css-module",
       when: ({ css }) => css
     },
     {
+      type: "list",
+      name: "lang",
+      message: chalk.yellow("choose language type"),
+      choices: ["javascript", "typescript"],
+      default: "javascript"
+    },
+    {
       type: "confirm",
-      name: "override",
-      message: chalk.yellow(
-        "The file already exists in the directory. Do you want to overwrite it"
-      ),
-      default: false,
-      when: ({ project }) => existsSync(resolve(proRoot, project))
+      name: "format",
+      message: chalk.yellow("add prettier?"),
+      default: true
     }
   ])
 
   /* 
     {
       project: 'template',
+      override: false
+
       router: true,
       css: true,
       cssTemp: 'css-module',
-      override: false
+      lang: javascript,
+      format: true
     }
   */
-  const projectDir = resolve(proRoot, project)
-  if (override !== undefined) {
-    if (!override) {
-      throw chalk.red(
-        "The file already exists in the directory. Do you want to overwrite it"
-      )
-    }
-
-    await rm(projectDir, { force: true, recursive: true })
-  }
-
   await mkdir(projectDir)
 
   const { pkg, withPkgToTemplate } = makeBasePackage(project)

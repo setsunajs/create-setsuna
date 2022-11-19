@@ -1,8 +1,10 @@
-export const tailwindConfig = [
+import { TempItem } from "src/makeBaseTemplate";
+
+export const tailwindConfig: TempItem = [
   "tailwind.config.js",
   {
     ext: "js",
-    path: "./tailwind.config.js",
+    path: "./tailwind.config",
     value: `/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [

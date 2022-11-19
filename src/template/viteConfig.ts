@@ -1,8 +1,10 @@
-export const viteConfig = [
+import { TempItem } from "src/makeBaseTemplate";
+
+export const viteConfig: TempItem = [
   "vite.config.js",
   {
     ext: "js",
-    path: "./vite.config.js",
+    path: "./vite.config",
     value: `import { defineConfig } from "vite"
 import { setsunaPlugin } from "@setsunajs/plugin-setsuna"
 

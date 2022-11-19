@@ -1,4 +1,6 @@
-export const assets = [
+import { TempItem } from "src/makeBaseTemplate";
+
+export const assets: TempItem = [
   "assets",
   {
     ext: "",

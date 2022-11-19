@@ -1,8 +1,8 @@
 import { exec } from "node:child_process"
 
-// pnpm > yarn > tnpm > npm
+// pnpm > yarn > tnpm > > cnpm > npm
 export function resolvePkgManagement() {
-  return new Promise(resolve => {
+  return new Promise<string>(resolve => {
     exec("pnpm --version", err => {
       if (!err) {
         return resolve("pnpm")
@@ -18,7 +18,13 @@ export function resolvePkgManagement() {
             return resolve("tnpm")
           }
 
-          resolve("npm")
+          exec("cnpm --version", err => {
+            if (!err) {
+              return resolve("cnpm")
+            }
+
+            resolve("npm")
+          })
         })
       })
     })

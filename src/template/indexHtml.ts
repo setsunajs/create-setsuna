@@ -1,8 +1,10 @@
-export const indexHtml = [
+import { TempItem } from "src/makeBaseTemplate";
+
+export const indexHtml: TempItem = [
   "index.html",
   {
     ext: "html",
-    path: "./index.html",
+    path: "./index",
     value: `<!DOCTYPE html>
 <html lang="en">
   <head>
