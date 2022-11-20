@@ -1,6 +1,6 @@
 {
   "name": "create-setsuna",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "Used to quickly create a 'setsuna. js' project",
   "keywords": [
     "setsuna",
@@ -23,7 +23,7 @@
   },
   "files": [
     "bin",
-    "lib"
+    "src"
   ],
   "scripts": {
     "build": "node ./build.js",
