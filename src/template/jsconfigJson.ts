@@ -1,29 +1,30 @@
-import { TempItem } from "src/makeBaseTemplate";
+import { fileTemps, TempItem } from "src/makeBaseTemplate"
 
-export const jsconfigJson: TempItem = [
-  "jsconfig.json",
-  {
-    ext: "json",
-    path: "./jsconfig",
-    value: {
-      compilerOptions: {
-        jsx: "preserve",
-        baseUrl: ".",
-        paths: {
-          "@modules/*": ["modules/*"],
-          "@assets/*": ["src/assets/*"]
+export const jsconfigJson = () => {
+  const content: TempItem = [
+    "jsconfig.json",
+    {
+      ext: "json",
+      path: "./jsconfig",
+      value: {
+        compilerOptions: {
+          jsx: "preserve",
+          baseUrl: ".",
+          paths: {
+            "@modules/*": ["modules/*"],
+            "@assets/*": ["src/assets/*"]
+          },
+          types: []
         },
-        types: []
-      },
-      include: [
-        "src/**/*.js",
-        "src/**/*.jsx",
-        "src/**/*",
-        "modules/**/*.js",
-        "modules/**/*.jsx",
-        "modules/**/*"
-      ],
-      exclude: ["node_modules"]
+        include: ["src/**/*.js", "src/**/*.jsx"],
+        exclude: ["node_modules"]
+      }
     }
+  ]
+
+  if (fileTemps) {
+    fileTemps.set(content[0], content[1])
   }
-]
+
+  return content
+}

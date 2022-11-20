@@ -1,9 +1,9 @@
-import { postcssConfig } from "./template/postcssConfig.js"
-import { tailwindConfig } from "./template/tailwindConfig.js"
-import { scopeModuleCss } from "./template/src/scopeModuleCss.js"
-import { tailwindCss } from "./template/src/assets/tailwindCss.js"
-import { Temp } from "./makeBaseTemplate.js"
-import { PKG } from "./makeBasePackage.js"
+import { postcssConfig } from "../template/postcssConfig.js"
+import { tailwindConfig } from "../template/tailwindConfig.js"
+import { scopeModuleCss } from "../template/src/scopeModuleCss.js"
+import { tailwindCss } from "../template/src/assets/tailwindCss.js"
+import { Temp } from "../makeBaseTemplate.js"
+import { PKG } from "../makeBasePackage.js"
 
 export function withCssOptions(type: string, pkg: PKG, template: Temp) {
   const src = template.get("src")!.content!
@@ -13,17 +13,21 @@ export function withCssOptions(type: string, pkg: PKG, template: Temp) {
     pkg.devDependencies["postcss"] = "^8.4.18"
     pkg.devDependencies["tailwindcss"] = "^3.2.1"
 
-    template.set(postcssConfig[0], postcssConfig[1])
-    template.set(tailwindConfig[0], tailwindConfig[1])
+    const postcssConfig_ = postcssConfig()
+    template.set(postcssConfig_[0], postcssConfig_[1])
+
+    const tailwindConfig_ = tailwindConfig()
+    template.set(tailwindConfig_[0], tailwindConfig_[1])
+
+    const assets = src.get("assets")!.content!
+    const tailwindCss_ = tailwindCss()
+    assets.set(tailwindCss_[0], tailwindCss_[1])
 
     const main = src.get("main.jsx")!
     main.value = main.value!.replace(
       /(import ".\/style.css")/,
       `$1\nimport "./assets/tailwind.css"`
     )
-
-    const assets = src.get("assets")!.content!
-    assets.set(tailwindCss[0], tailwindCss[1])
     return
   }
 
@@ -32,18 +36,15 @@ export function withCssOptions(type: string, pkg: PKG, template: Temp) {
     pkg.devDependencies[type] = version
   }
 
-  src.set(`scope.module.${ext}`, {
-    ext,
-    path: `./src/scope.module.${ext}`,
-    value: scopeModuleCss[1].value
-  })
+  const scopeModuleCss_ = scopeModuleCss(ext)
+  src.set(scopeModuleCss_[0], scopeModuleCss_[1])
 
   const app = src.get("App.jsx")!
   app.value = app.value!.replace(
     /^/,
     `import style from "./scope.module.${ext}"\n`
   )
-  app.value = app.value!.replace(/"title"/, `{"title " + style.color}`)
+  app.value = app.value!.replace(/class="title"/, `class={"title " + style.color}`)
 }
 
 export function resolveCssConfig(type: string) {

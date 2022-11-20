@@ -1,17 +1,19 @@
-import { router } from "./template/src/router/router.js"
-import { modules_ } from "./template/modules/modules.js"
-import { PKG } from "./makeBasePackage.js"
-import { Temp } from "./makeBaseTemplate.js"
+import { router } from "../template/src/router/router.js"
+import { modules_ } from "../template/modules/modules.js"
+import { PKG } from "../makeBasePackage.js"
+import { Temp } from "../makeBaseTemplate.js"
 
 export function withRouterOptions(pkg: PKG, template: Temp) {
   pkg.dependencies["@setsunajs/router"] = "^0.2.0"
 
-  const src = template.get("src")!.content!
-  const main = src.get("main.jsx")!
-  const app = src.get("App.jsx")!
+  const modules__ = modules_()
+  template.set(modules__[0], modules__[1])
 
-  template.set(modules_[0], modules_[1])
-  src.set(router[0], router[1])
+  const src = template.get("src")!.content!
+  const router_ = router()
+  src.set(router_[0], router_[1])
+
+  const main = src.get("main.jsx")!
   main.value = main.value!.replace(
     /^/,
     `import { AppRouter } from "./router/router"\n\n`
@@ -20,6 +22,8 @@ export function withRouterOptions(pkg: PKG, template: Temp) {
     /(<App \/>)/,
     `<AppRouter>\n    $1\n  </AppRouter>`
   )
+
+  const app = src.get("App.jsx")!
   app.value = app.value!.replace(
     /^/,
     `import { RouterView } from "@setsunajs/router"\n\n`

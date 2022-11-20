@@ -10,8 +10,10 @@ import { makeBasePackage } from "./makeBasePackage"
 import { makeBaseFile } from "./makeBaseTemplate"
 import { resolvePkgManagement } from "./resolvePkgManagement.js"
 import { normalizeCommand } from "./normalizeCommand.js"
-import { withRouterOptions } from "./withRouterOptions.js"
-import { withCssOptions } from "./withCssOptions.js"
+import { withRouterOptions } from "./withOptions/withRouterOptions.js"
+import { withCssOptions } from "./withOptions/withCssOptions.js"
+import { withJsOptions } from "./withOptions/withJsOptions.js"
+import { withTsOptions } from "./withOptions/withTsOptions.js"
 
 const proRoot = process.cwd()
 const validateDir = /^[-_a-zA-Z0-9]+$/
@@ -78,8 +80,8 @@ export async function create() {
       type: "list",
       name: "lang",
       message: chalk.yellow("choose language type"),
-      choices: ["javascript", "typescript"],
-      default: "javascript"
+      choices: ["js", "ts"],
+      default: "js"
     },
     {
       type: "confirm",
@@ -108,12 +110,14 @@ export async function create() {
   const manage = await resolvePkgManagement()
 
   if (router) {
-    withRouterOptions(pkg, template)
+    withRouterOptions(pkg, template, lang)
   }
 
   if (css) {
     withCssOptions(cssTemp, pkg, template)
   }
+
+  lang === "js" ? withJsOptions(pkg, template) : withTsOptions(pkg, template)
 
   console.log(`\n${chalk.yellow(`project generating ...`)}`)
 
