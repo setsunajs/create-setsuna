@@ -1,4 +1,4 @@
-import { fileTemps, TempItem } from "src/makeBaseTemplate";
+import { fileTemps, TempItem } from "src/makeBaseTemplate"
 
 export const tailwindCss = () => {
   const content: TempItem = [
@@ -7,11 +7,11 @@ export const tailwindCss = () => {
       ext: "css",
       path: "./src/assets/tailwind",
       value: `@tailwind base;
-  @tailwind components;
-  @tailwind utilities;`
+@tailwind components;
+@tailwind utilities;`
     }
   ]
-  
+
   if (fileTemps) {
     fileTemps.set(content[0], content[1])
   }

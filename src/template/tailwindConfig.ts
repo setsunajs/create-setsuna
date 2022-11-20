@@ -1,23 +1,23 @@
-import { fileTemps, TempItem } from "src/makeBaseTemplate";
+import { fileTemps, TempItem } from "src/makeBaseTemplate"
 
-export const tailwindConfig = () => {
+export const tailwindConfig = (lang: string) => {
   const content: TempItem = [
-    "tailwind.config.js",
+    "tailwind.config.cjs",
     {
-      ext: "js",
+      ext: "cjs",
       path: "./tailwind.config",
       value: `/** @type {import('tailwindcss').Config} */
-  module.exports = {
-    content: [
-      "./src/**/*.{js,jsx}",
-      "./modules/**/*.{js,jsx}",
-      "./index.html"
-    ],
-    theme: {
-      extend: {},
-    },
-    plugins: [],
-  }`
+module.exports = {
+  content: [
+    "./src/**/*.{${lang === "ts" ? "ts,tsx" : "js,jsx"}}",
+    "./modules/**/*.{${lang === "ts" ? "ts,tsx" : "js,jsx"}}",
+    "./index.html"
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}`
     }
   ]
 

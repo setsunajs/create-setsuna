@@ -17,6 +17,8 @@ export type TempContent = {
 export let fileTemps: Temp | null = null
 
 export function makeBaseFile(projectDir: string) {
+  fileTemps = new Map()
+
   const template: Temp = new Map([indexHtml(), viteConfig(), src(), public_()])
   const resolve = (...ps: string[]) => path.resolve(projectDir, ...ps)
   const writeTemplateFile = (content: Temp) => {
@@ -35,7 +37,6 @@ export function makeBaseFile(projectDir: string) {
       }
     })
   }
-  fileTemps = new Map()
 
   return {
     template,

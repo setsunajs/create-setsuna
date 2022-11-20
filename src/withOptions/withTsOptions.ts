@@ -1,6 +1,6 @@
 import { PKG } from "src/makeBasePackage"
 import { fileTemps, Temp } from "src/makeBaseTemplate"
-import { tsconfigJson } from "src/template/tsConfigJson"
+import { tsconfigJson } from "src/template/tsconfig-json"
 import { tsconfigNodeJson } from "src/template/tsconfigNodeJson"
 
 export const withTsOptions = (pkg: PKG, template: Temp) => {
@@ -13,20 +13,23 @@ export const withTsOptions = (pkg: PKG, template: Temp) => {
   const tsconfigNodeJson_ = tsconfigNodeJson()
   template.set(tsconfigNodeJson_[0], tsconfigNodeJson_[1])
 
-  const indexHtml = template.get("index.html")!
-  indexHtml.value! = indexHtml.value!.replace("main.jsx", "tsx")
+  const mainJsx = fileTemps!.get("main.jsx")!
+  mainJsx.value! = mainJsx.value!.replace(/(querySelector\("#root"\))/, "$1!")
 
-  template.get("vite.config.js")!.ext = "ts"
+  const indexHtml = fileTemps!.get("index.html")!
+  indexHtml.value! = indexHtml.value!.replace("main.jsx", "main.tsx")
 
-  const src = template.get("src")!.content!
-  src.get("main.jsx")!.ext = "tsx"
-  src.get("App.jsx")!.ext = "tsx"
+  const appJsx = fileTemps!.get("App.jsx")!
+  appJsx!.value = appJsx
+    .value!.replace("const App", "const App: FC")
+    .replace(/^/, `import { FC } from "setsunajs"\n`)
+
+  fileTemps!.get("vite.config.js")!.ext = "ts"
 
   fileTemps!.forEach(item => {
     if (item.ext === "js") {
       item.ext = "ts"
-    }
-    else if (item.ext === "jsx") {
+    } else if (item.ext === "jsx") {
       item.ext = "tsx"
     }
   })

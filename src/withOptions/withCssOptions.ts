@@ -5,7 +5,7 @@ import { tailwindCss } from "../template/src/assets/tailwindCss.js"
 import { Temp } from "../makeBaseTemplate.js"
 import { PKG } from "../makeBasePackage.js"
 
-export function withCssOptions(type: string, pkg: PKG, template: Temp) {
+export function withCssOptions(type: string, pkg: PKG, template: Temp, lang: string) {
   const src = template.get("src")!.content!
 
   if (type === "tailwind") {
@@ -16,7 +16,7 @@ export function withCssOptions(type: string, pkg: PKG, template: Temp) {
     const postcssConfig_ = postcssConfig()
     template.set(postcssConfig_[0], postcssConfig_[1])
 
-    const tailwindConfig_ = tailwindConfig()
+    const tailwindConfig_ = tailwindConfig(lang)
     template.set(tailwindConfig_[0], tailwindConfig_[1])
 
     const assets = src.get("assets")!.content!
@@ -26,7 +26,7 @@ export function withCssOptions(type: string, pkg: PKG, template: Temp) {
     const main = src.get("main.jsx")!
     main.value = main.value!.replace(
       /(import ".\/style.css")/,
-      `$1\nimport "./assets/tailwind.css"`
+      `import "./assets/tailwind.css"\n$1`
     )
     return
   }
@@ -44,7 +44,10 @@ export function withCssOptions(type: string, pkg: PKG, template: Temp) {
     /^/,
     `import style from "./scope.module.${ext}"\n`
   )
-  app.value = app.value!.replace(/class="title"/, `class={"title " + style.color}`)
+  app.value = app.value!.replace(
+    /class="title"/,
+    `class={"title " + style.color}`
+  )
 }
 
 export function resolveCssConfig(type: string) {

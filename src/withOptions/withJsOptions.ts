@@ -1,4 +1,4 @@
-import { jsconfigJson } from './../template/jsconfigJson';
+import { jsconfigJson } from "./../template/jsconfigJson"
 import { PKG } from "src/makeBasePackage"
 import { Temp } from "src/makeBaseTemplate"
 

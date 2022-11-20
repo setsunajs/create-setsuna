@@ -7,11 +7,11 @@ export const mainJsx = () => {
       ext: "jsx",
       path: "./src/main",
       value: `import { createRoot } from "setsunajs"
-  import { App } from "./App"
-  import "./style.css"
-  
-  createRoot(document.querySelector('#root')).mount(<App />)
-  `
+import { App } from "./App"
+import "./style.css"
+
+createRoot(document.querySelector("#root")).mount(<App />)
+`
     }
   ]
 

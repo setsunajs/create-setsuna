@@ -11,7 +11,6 @@ export const tsconfigJson = () => {
           target: "ESNext",
           useDefineForClassFields: true,
           lib: ["DOM", "DOM.Iterable", "ESNext"],
-          jsxImportSource: "@emotion/react",
           allowJs: false,
           skipLibCheck: false,
           esModuleInterop: true,

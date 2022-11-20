@@ -1,14 +1,13 @@
 import { fileTemps, TempItem } from "src/makeBaseTemplate"
 
-export const scopeModuleCss = (ext: string) => {
+export const viteEnvDts = () => {
   const content: TempItem = [
-    `scope.module.${ext}`,
+    "vite-env.d.ts",
     {
-      ext,
-      path: "./src/scope.module",
-      value: `.color {
-  font-style: italic;
-}`
+      ext: "d.ts",
+      path: "./src/vite-env",
+      value: `/// <reference types="vite/client" />
+`
     }
   ]
 

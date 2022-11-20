@@ -82,16 +82,10 @@ export async function create() {
       message: chalk.yellow("choose language type"),
       choices: ["js", "ts"],
       default: "js"
-    },
-    {
-      type: "confirm",
-      name: "format",
-      message: chalk.yellow("add prettier?"),
-      default: true
     }
   ])
 
-  /* 
+  /*
     {
       project: 'template',
       override: false
@@ -99,8 +93,7 @@ export async function create() {
       router: true,
       css: true,
       cssTemp: 'css-module',
-      lang: javascript,
-      format: true
+      lang: javascript
     }
   */
   await mkdir(projectDir)
@@ -110,11 +103,11 @@ export async function create() {
   const manage = await resolvePkgManagement()
 
   if (router) {
-    withRouterOptions(pkg, template, lang)
+    withRouterOptions(pkg, template)
   }
 
   if (css) {
-    withCssOptions(cssTemp, pkg, template)
+    withCssOptions(cssTemp, pkg, template, lang)
   }
 
   lang === "js" ? withJsOptions(pkg, template) : withTsOptions(pkg, template)

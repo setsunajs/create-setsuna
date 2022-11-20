@@ -1,17 +1,17 @@
-import { fileTemps, TempItem } from "src/makeBaseTemplate";
+import { fileTemps, TempItem } from "src/makeBaseTemplate"
 
 export const postcssConfig = () => {
   const content: TempItem = [
-    "postcss.config.js",
+    "postcss.config.cjs",
     {
-      ext: "js",
+      ext: "cjs",
       path: "./postcss.config",
       value: `module.exports = {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  }`
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}`
     }
   ]
 

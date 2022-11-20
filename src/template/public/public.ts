@@ -1,4 +1,4 @@
-import { fileTemps, TempItem } from "src/makeBaseTemplate";
+import { fileTemps, TempItem } from "src/makeBaseTemplate"
 
 export const public_ = () => {
   const content: TempItem = [

@@ -10,7 +10,7 @@ export function makeBasePackage(project: string) {
     },
     dependencies: {
       "@setsunajs/observable": "^0.2.0",
-      "@setsunajs": "^0.1.0"
+      "setsunajs": "^0.1.0"
     },
     devDependencies: {
       vite: "^3.2.0",

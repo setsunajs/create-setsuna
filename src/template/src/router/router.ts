@@ -7,20 +7,20 @@ export const routerJsx = () => {
       ext: "jsx",
       path: "./src/router/router",
       value: `import { createBrowserRouter, Lazy } from "@setsunajs/router"
-  import { Home } from "@modules/Home/Home"
-  
-  export const AppRouter = createBrowserRouter({
-    routes: [
-      {
-        path: "/",
-        component: <Home />
-      },
-      {
-        path: ".*",
-        component: <Lazy load={() => import("@modules/Error/Error")} /> 
-      }
-    ]
-  })`
+import { Home } from "@modules/Home/Home"
+
+export const AppRouter = createBrowserRouter({
+  routes: [
+    {
+      path: "/",
+      element: <Home />
+    },
+    {
+      path: ".*",
+      element: <Lazy load={() => import("@modules/Error/Error")} /> 
+    }
+  ]
+})`
     }
   ]
 

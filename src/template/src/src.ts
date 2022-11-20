@@ -1,3 +1,4 @@
+import { viteEnvDts } from "./vite-env-dts"
 import { appJsx } from "./appJsx"
 import { mainJsx } from "./mainJsx"
 import { styleCss } from "./styleCss"
@@ -10,7 +11,13 @@ export const src = () => {
     {
       ext: "",
       path: "./src",
-      content: new Map([mainJsx(), appJsx(), styleCss(), assets()])
+      content: new Map([
+        mainJsx(),
+        appJsx(),
+        styleCss(),
+        assets(),
+        viteEnvDts()
+      ])
     }
   ]
 
