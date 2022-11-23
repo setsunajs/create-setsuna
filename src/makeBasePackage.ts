@@ -14,7 +14,7 @@ export function makeBasePackage(project: string) {
     },
     devDependencies: {
       vite: "^3.2.0",
-      "@setsunajs/plugin-setsuna": "^0.2.2"
+      "@setsunajs/plugin-setsuna": "^0.2.0"
     }
   }
   const withPkgToTemplate = (template: Temp) => {
